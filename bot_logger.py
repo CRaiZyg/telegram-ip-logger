@@ -8,7 +8,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
 # ================= НАСТРОЙКИ =================
-BOT_TOKEN = "8899292248:AAHihmagEjya3sAjEhIuwBv5j_wisZGTTMc"  # <-- Вставь сюда токен от BotFather
+BOT_TOKEN = os.getenv("BOT_TOKEN")  # <-- Вставь сюда токен от BotFather
 DOMAIN = os.getenv("RENDER_EXTERNAL_URL", "http://localhost:8080") # Локальный адрес для тестов
 WEB_PORT = 8080
 # =============================================
