@@ -7,18 +7,14 @@ from aiohttp import web, ClientSession
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
-# ================= НАСТРОЙКИ =================
-BOT_TOKEN = os.getenv("BOT_TOKEN")  # <-- Вставь сюда токен от BotFather
-DOMAIN = os.getenv("RENDER_EXTERNAL_URL", "http://localhost:8080") # Локальный адрес для тестов
-WEB_PORT = 8080
-# =============================================
+BOT_TOKEN = os.getenv("BOT_TOKEN") 
+DOMAIN = os.getenv("RENDER_EXTERNAL_URL", "http://localhost:8080") 
 
 logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
-# --- БАЗА ДАННЫХ SQLITE ---
 def init_db():
     conn = sqlite3.connect("links.db")
     cursor = conn.cursor()
@@ -147,10 +143,14 @@ async def handle_redirect(request: web.Request):
     raise web.HTTPFound(location=target_url)
 
 # --- ГЛАВНАЯ ТОЧКА ВХОДА ---
+async def handle_ping(request):
+    return web.Response(text="OK", status=200)
+
 async def main():
     init_db()
     
     app = web.Application()
+    app.router.add_get("/", handle_ping)
     app.router.add_get("/r/{short_code}", handle_redirect)
 
     runner = web.AppRunner(app)
