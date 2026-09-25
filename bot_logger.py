@@ -157,11 +157,7 @@ async def main():
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", int(os.environ.get("PORT", 10000)))
     await site.start()
-
-    WEB_PORT = int(os.environ.get("PORT", 10000))
-    site = web.TCPSite(runner, "0.0.0.0", WEB_PORT)
-    await site.start()
-
+    
     try:
         await dp.start_polling(bot)
     finally:
